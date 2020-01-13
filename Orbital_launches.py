@@ -43,7 +43,6 @@ while(index < len(orbital_launches)):
 
 		date = datetime.datetime.strptime(date, '%d %B%H:%M:%S%Y')
 		value = 0
-		# print(date.date())
 		end_index = index + int(rowspan)
 		index = index + 1
 		while(index < end_index):
@@ -56,10 +55,11 @@ while(index < len(orbital_launches)):
 			else:
 				index = index + 1
 
-		if date.date() in launches.keys():
-			launches[date.date()] = launches[date.date()] + 1
+		isodate = datetime.datetime(date.year, date.month, date.day, 0, 0, 0, 0)
+		if isodate in launches.keys():
+			launches[isodate] = launches[isodate] + 1
 		else:
-			launches[date.date()] = (value)
+			launches[isodate] = (value)
 
 
 		index = end_index
@@ -68,32 +68,24 @@ while(index < len(orbital_launches)):
 
 
 
-sdate = datetime.date(2019, 1, 1)   # start date
-edate = datetime.date(2019, 12, 31)   # end date
+sdate = datetime.datetime(2019, 1, 1, 0, 0, 0, 0)  
+edate = datetime.datetime(2019, 12, 31, 0, 0, 0, 0) 
 
-delta = edate - sdate       # as timedelta
-
+delta = edate - sdate 
 alldates = dict()
 for i in range(delta.days + 1):
     day = sdate + datetime.timedelta(days=i)
     if day not in launches.keys():
-    	# date = datetime.datetime.strptime(day, '%Y-%M-%d')
-    	alldates[day] = 0
-    	print(day, alldates[day])
-
-# launches.update(alldates)
-launches = dict(launches,**alldates)
-for key, value in launches.items():
-	print(key ,value)
+    	alldates[(day)] = 0
+    else:
+    	alldates[(day)] = launches[(day)]
 
 dictlist = []
-for key, value in launches.items():
-	# print(key.isoformat() + "," + str(value))
+for key, value in alldates.items():
 	temp = [key.isoformat(), value]
 	dictlist.append(temp)
 
 with open("output.csv", 'w') as csvfile: 
-    # creating a csv writer object 
     csvwriter = csv.writer(csvfile)
     for a in dictlist:
     	csvwriter.writerow(a)
