@@ -40,7 +40,6 @@ while(index < len(orbital_launches)):
 		else:
 			date = date + "00:00:002019"
 
-
 		date = datetime.datetime.strptime(date, '%d %B%H:%M:%S%Y')
 		value = 0
 		end_index = index + int(rowspan)
@@ -60,13 +59,9 @@ while(index < len(orbital_launches)):
 			launches[isodate] = launches[isodate] + 1
 		else:
 			launches[isodate] = (value)
-
-
 		index = end_index
 	else:
 		index = index + 1
-
-
 
 sdate = datetime.datetime(2019, 1, 1, 0, 0, 0, 0)  
 edate = datetime.datetime(2019, 12, 31, 0, 0, 0, 0) 
@@ -89,5 +84,4 @@ with open("output.csv", 'w') as csvfile:
     csvwriter = csv.writer(csvfile)
     for a in dictlist:
     	csvwriter.writerow(a)
-
     csvfile.close()
