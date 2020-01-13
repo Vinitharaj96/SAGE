@@ -4,7 +4,6 @@ import csv
 from bs4 import BeautifulSoup
 
 file_reader = open("URL.txt", "r")
-file_reader1 = open("1.txt", "w")
 url = file_reader.read()
 
 orbital_wiki = requests.get(url)
@@ -14,7 +13,6 @@ mw_content_text = orbital_soup.find(id='mw-content-text')
 mw_content_text = mw_content_text.find_all('div')[0]
 orbital_launches = mw_content_text.find_all('table')
 
-file_reader1.write(orbital_launches[3].prettify())
 orbital_launches = orbital_launches[3].find('tbody')
 orbital_launches = orbital_launches.find_all('tr')
 
